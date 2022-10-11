@@ -1,0 +1,1 @@
+{"version":3,"file":"selector-engine.d.ts","sourceRoot":"","sources":["../../src/utilities/selector-engine.ts"],"names":[],"mappings":"AAEA,aAAK,WAAW,GAAG,MAAM,CAAA;AA+HzB,eAAO,MAAM,cAAc;2DApHmC,WAAW;gEAaR,MAAM;gEAcN,WAAW,YAAY,MAAM;2DAclC,WAAW,YAAY,MAAM;0DAsB9B,WAAW;2DAcV,WAAW,YAAY,MAAM;2DAwB7B,WAAW,YAAY,MAAM;CAuBxF,CAAA"}
