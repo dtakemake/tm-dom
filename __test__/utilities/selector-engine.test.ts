@@ -33,12 +33,9 @@ beforeAll(() => {
 describe('selectorEngine.find', () => {
 
   // 1
-  test('returns empty array(not null), if no elements found', () => {
+  test('returns an empty array, if no elements are found', () => {
     const expected: Array<HTMLElement> = []
     const elements = selectorEngine.find(notExistingClass)
-
-    // not null
-    expect(elements).not.toBeNull()
 
     // comparison with an array
     expect(elements).toEqual(expect.arrayContaining(expected))
@@ -72,12 +69,14 @@ describe('selectorEngine.find', () => {
 describe('selectorEngine.findOne', () => {
 
   // 1
-  test('returns null, if element not found', () => {
+  test('returns null, if the element is not found', () => {
     const element = selectorEngine.findOne(notExistingClass)
 
     // null
     expect(element).toBeNull()
   })
+
+  // 2
 
 })
 
@@ -85,15 +84,12 @@ describe('selectorEngine.findOne', () => {
 describe('selectorEngine.childrens', () => {
 
   // 1
-  test('returns empty array(not null), if no elements found', () => {
+  test('returns empty array, if no elements are found', () => {
     const expected: Array<HTMLElement> = []
     const parent = selectorEngine.findOne('.container')
 
     if(parent) {
       const childrens = selectorEngine.childrens(parent, notExistingClass)
-
-      // not null
-      expect(childrens).not.toBeNull()
 
       // comparison with an array
       expect(childrens).toEqual(expect.arrayContaining(expected))
@@ -103,13 +99,16 @@ describe('selectorEngine.childrens', () => {
       expect(parent).not.toBeNull()
     }
   })
+
+  // 2
+
 })
 
 // parents
 describe('selectorEngine.parents', () => {
 
   // 1
-  test('returns null, if element not found', () => {
+  test('returns null, if the element is not found', () => {
     const children = selectorEngine.findOne('.row')
 
     if(children) {
@@ -124,21 +123,21 @@ describe('selectorEngine.parents', () => {
     }
   })
 
+  // 2
+
 })
 
 // parent
 describe('selectorEngine.parent', () => {
 
   // 1
-  test('find parent', () => {
+  test('find element\'s parent', () => {
     const children = selectorEngine.findOne('.col-md-4')
     
     if(children) {
       const parent_1 = selectorEngine.parent(children)
 
       if(parent_1) {
-        // incorrectly defined HTMLElement
-        expect(parent_1).not.toBeNull()
         expect(parent_1.classList.contains('row')).toBeTruthy()
 
         const parent_2 = selectorEngine.parent(parent_1)
@@ -146,6 +145,10 @@ describe('selectorEngine.parent', () => {
         // incorrectly defined HTMLElement
         expect(parent_2).not.toBeNull()
         expect(parent_2?.classList.contains('container')).toBeTruthy()
+      } else {
+
+        // incorrectly defined HTMLElement
+        expect(parent_1).not.toBeNull()
       }
       
     } else {
@@ -155,17 +158,19 @@ describe('selectorEngine.parent', () => {
     }
   })
 
+  // 2
+
 })
 
 // prev
 describe('selectorEngine.prev', () => {
 
   // 1
-  test('returns null, if element not found', () => {
+  test('returns null, if the element is not found', () => {
     const element = selectorEngine.findOne('.col-md-4')
 
     if(element) {
-      const prev = selectorEngine.prev(element, '.col-md-5')
+      const prev = selectorEngine.prev(element, notExistingClass)
       expect(prev).toBeNull()
     } else {
 
@@ -174,17 +179,19 @@ describe('selectorEngine.prev', () => {
     }
   })
 
+  // 2
+
 })
   
 // next
 describe('selectorEngine.next', () => {
 
   // 1
-  test('returns null, if element not found', () => {
+  test('returns null, if the element is not found', () => {
     const element = selectorEngine.findOne('.col-md-4')
 
     if(element) {
-      const next = selectorEngine.next(element, '.col-md-5')
+      const next = selectorEngine.next(element, notExistingClass)
       expect(next).toBeNull()
     } else {
 
@@ -192,5 +199,7 @@ describe('selectorEngine.next', () => {
       expect(element).not.toBeNull()
     }
   })
+
+  // 2
 
 })
