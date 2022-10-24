@@ -10,16 +10,16 @@ beforeAll(() => {
         <div class="col-12">
           <h1>Hello world!</h3>
         </div>
-        <div class="col-md-4"></div>
+        <div class="col-md-4 first-element"></div>
         <div class="col-md-4">
           <img src="fake-path" alt="fake-alt" />
         </div>
         <div class="col-md-4">
           <form action="#" method="GET" class="form">
-            <div class="forn-group">
+            <div class="form-group first-element">
               <input type="text" value="" class="input" />
             </div>
-            <div class="forn-group">
+            <div class="form-group">
               <button type="submit" class="submit">Send</button>
             </div>
           </form>
@@ -44,15 +44,16 @@ describe('selectorEngine.find', () => {
   // 2
   test('finds the required number of elements', () => {
     const selector = '.col-md-4'
+    const expected = 3
 
     // find in the DOM
     const elements = selectorEngine.find(selector)
-    expect(elements).toHaveLength(3)
+    expect(elements).toHaveLength(expected)
 
     // find in the HTMLElement
     const parent = <HTMLElement>document.querySelector('.row')
-    const parent_elements = selectorEngine.find(selector, parent)
-    expect(parent_elements).toHaveLength(3)
+    const parentElements = selectorEngine.find(selector, parent)
+    expect(parentElements).toHaveLength(expected)
   })
 
   // 3
@@ -77,7 +78,33 @@ describe('selectorEngine.findOne', () => {
   })
 
   // 2
+  test('check that the method returns exactly the first element found', () => {
 
+    // find in the DOM
+    const element = selectorEngine.findOne('.col-md-4')
+
+    // check for classname
+    if(element) {
+      expect(element.classList.contains('first-element')).toBe(true)
+    } else {
+
+      // incorrectly defined HTMLElement
+      expect(element).not.toBeNull()
+    }
+
+    // find in the HTMLElement
+    const parent = <HTMLElement>document.querySelector('.form')
+    const parentElement = selectorEngine.findOne('.form-group', parent)
+    
+    // check for classname
+    if(parentElement) {
+      expect(parentElement.classList.contains('first-element')).toBe(true)
+    } else {
+    
+      // incorrectly defined HTMLElement
+      expect(parentElement).not.toBeNull()
+    }
+  })
 })
 
 // childrens
@@ -86,22 +113,24 @@ describe('selectorEngine.childrens', () => {
   // 1
   test('returns empty array, if no elements are found', () => {
     const expected: Array<HTMLElement> = []
-    const parent = selectorEngine.findOne('.container')
 
-    if(parent) {
-      const childrens = selectorEngine.childrens(parent, notExistingClass)
+    // find in the HTMLElement
+    const parent = <HTMLElement>document.querySelector('.row')
+    const childrens = selectorEngine.childrens(parent, notExistingClass)
 
-      // comparison with an array
-      expect(childrens).toEqual(expect.arrayContaining(expected))
-    } else {
-
-      // incorrectly defined HTMLElement
-      expect(parent).not.toBeNull()
-    }
+    // comparison with an array
+    expect(childrens).toEqual(expect.arrayContaining(expected))
   })
 
   // 2
+  test('finds the required number of elements', () => {
+    const expected = 3
 
+    // find in the HTMLElement
+    const parent = <HTMLElement>document.querySelector('.row')
+    const parentElements = selectorEngine.childrens(parent, '.col-md-4')
+    expect(parentElements).toHaveLength(expected)
+  })
 })
 
 // parents
@@ -138,13 +167,13 @@ describe('selectorEngine.parent', () => {
       const parent_1 = selectorEngine.parent(children)
 
       if(parent_1) {
-        expect(parent_1.classList.contains('row')).toBeTruthy()
+        expect(parent_1.classList.contains('row')).toBe(true)
 
         const parent_2 = selectorEngine.parent(parent_1)
 
         // incorrectly defined HTMLElement
         expect(parent_2).not.toBeNull()
-        expect(parent_2?.classList.contains('container')).toBeTruthy()
+        expect(parent_2?.classList.contains('container')).toBe(true)
       } else {
 
         // incorrectly defined HTMLElement
