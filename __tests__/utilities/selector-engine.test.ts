@@ -1,20 +1,20 @@
 import { selectorEngine } from '../../src'
 
-// a class that doesn't exist
+// the class that doesn't exist
 const notExistingClass = '.not-existing-class'
 
 beforeAll(() => {
   document.body.innerHTML = `
-    <section class="container">
-      <div class="row">
+    <section class="container parents">
+      <div class="row parents">
         <div class="col-12">
           <h1>Hello world!</h3>
         </div>
         <div class="col-md-4 first-element"></div>
-        <div class="col-md-4">
+        <div class="col-md-4 between-element">
           <img src="fake-path" alt="fake-alt" />
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 last-element">
           <form action="#" method="GET" class="form">
             <div class="form-group first-element">
               <input type="text" value="" class="input" />
@@ -153,7 +153,20 @@ describe('selectorEngine.parents', () => {
   })
 
   // 2
+  test('checking the search for the nearest parent by the selector', () => {
 
+    // find in the HTMLElement
+    const children = <HTMLElement>document.querySelector('.input')
+    const parent = selectorEngine.parents(children, '.parents')
+
+    if(parent) {
+      expect(parent.classList.contains('row')).toBe(true)
+    } else {
+
+      // incorrectly defined HTMLElement
+      expect(parent).not.toBeNull()
+    }
+  })
 })
 
 // parent
@@ -186,9 +199,6 @@ describe('selectorEngine.parent', () => {
       expect(children).not.toBeNull()
     }
   })
-
-  // 2
-
 })
 
 // prev
@@ -209,7 +219,20 @@ describe('selectorEngine.prev', () => {
   })
 
   // 2
+  test('checking the search for the previous sibling element by the selector', () => {
+    const element = <HTMLElement>document.querySelector('.last-element')
 
+    const previous = selectorEngine.prev(element, '.first-element')
+
+    if(previous) {
+      expect(previous.classList.contains('col-md-4')).toBe(true)
+      expect(previous.classList.contains('between-element')).toBe(false)
+    } else {
+      
+      // incorrectly defined HTMLElement
+      expect(previous).not.toBeNull()
+    }
+  })
 })
   
 // next
@@ -230,5 +253,18 @@ describe('selectorEngine.next', () => {
   })
 
   // 2
+  test('checking the search for the next sibling element by selector', () => {
+    const element = <HTMLElement>document.querySelector('.first-element')
 
+    const next = selectorEngine.next(element, '.last-element')
+
+    if(next) {
+      expect(next.classList.contains('col-md-4')).toBe(true)
+      expect(next.classList.contains('between-element')).toBe(false)
+    } else {
+      
+      // incorrectly defined HTMLElement
+      expect(next).not.toBeNull()
+    }
+  })
 })
