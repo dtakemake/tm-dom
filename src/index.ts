@@ -1,5 +1,5 @@
-import { documentReady, documentComplete } from './utilities/ready'
-import { selectorEngine } from './utilities/selector-engine'
+import { documentReady, documentComplete } from './ready'
+import { selectorEngine } from './selector-engine'
 
 export {
   documentReady,

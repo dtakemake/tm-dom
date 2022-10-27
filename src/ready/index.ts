@@ -29,6 +29,15 @@ type documentComplete = {
   (callback: Callback): void
 }
 
+/*
+interface EventTarget {
+  readonly readyState: DocumentReadyState
+}
+
+interface Event {
+  readonly target: EventTarget
+}*/
+
 /**
  * the function calls the passed function after 
  * the document and all sub-resources have finished loading. 
@@ -41,7 +50,14 @@ type documentComplete = {
  */
 const documentComplete: documentComplete = callback => {
   if(document.readyState !== 'complete') {
-    window.addEventListener('load', callback, { once: true })
+
+    // ?
+    document.addEventListener('readystatechange', (event: Event) => {
+      if(document.readyState === 'complete') {
+        callback()
+      }
+    })
+
   } else {
     // call the passed function immediately
     callback()
