@@ -52,7 +52,7 @@ const documentComplete: documentComplete = callback => {
   if(document.readyState !== 'complete') {
 
     // ?
-    document.addEventListener('readystatechange', (event: Event) => {
+    document.addEventListener('readystatechange', () => {
       if(document.readyState === 'complete') {
         callback()
       }
