@@ -11,8 +11,8 @@ type CSSSelector = string
  * @example find<HTMLDivElement>('div, .div, #div')
  * @example fint<HTMLSpanElement>('.selector', HTMLElement)
  */
-const find = <T extends HTMLElement = HTMLElement>(selectors: CSSSelector, element = document.documentElement): Array<T> => {
-  return <Array<T>>Array.from(Element.prototype.querySelectorAll.call(element, selectors))
+const find = <T extends HTMLElement = HTMLElement>( selectors: CSSSelector, element = document.documentElement ): Array<T> => {
+  return <Array<T>>Array.from( Element.prototype.querySelectorAll.call( element, selectors ) )
 }
 
 /**
@@ -24,8 +24,9 @@ const find = <T extends HTMLElement = HTMLElement>(selectors: CSSSelector, eleme
  * @example findOne<HTMLDivElement>('div, .div, #div')
  * @example findOne<HTMLSpanElement>('.selector', HTMLElement)
  */
-const findOne = <T extends HTMLElement = HTMLElement>(selectors: string, element = document.documentElement): T | null => {
-  return <T>Element.prototype.querySelector.call(element, selectors)
+type ReturnTypeFindOne<T> = T | null 
+const findOne = <T extends HTMLElement = HTMLElement>( selectors: CSSSelector, element = document.documentElement ): ReturnTypeFindOne<T> => {
+  return <ReturnTypeFindOne<T>>Element.prototype.querySelector.call( element, selectors )
 }
 
 /**
@@ -38,8 +39,8 @@ const findOne = <T extends HTMLElement = HTMLElement>(selectors: string, element
  * @example childrens<HTMLDivElement>(HTMLElement, '.childDiv')
  * @example childrens<HTMLSpanElement>(HTMLElement, '.childSpan')
  */
-const childrens = <T extends HTMLElement = HTMLElement>(element: HTMLElement, selector: string): Array<T> => {
-  return <Array<T>>Array.from(element.children).filter(child => child.matches(selector))
+const childrens = <T extends HTMLElement = HTMLElement>( element: HTMLElement, selector: CSSSelector ): Array<T> => {
+  return <Array<T>>Array.from( element.children ).filter( child => child.matches( selector ) )
 }
 
 /**
@@ -52,18 +53,19 @@ const childrens = <T extends HTMLElement = HTMLElement>(element: HTMLElement, se
  * @example parents<HTMLDivElement>(HTMLElement, '.parentDiv')
  * @example parents<HTMLSpanElement>(HTMLElement, '.parentSpan')
  */
-const parents = <T extends HTMLElement = HTMLElement>(node: HTMLElement, selector: string): T | null => {
+type ReturnTypeParents<T> = T | null
+const parents = <T extends HTMLElement = HTMLElement>( node: HTMLElement, selector: CSSSelector ): ReturnTypeParents<T> => {
   let ancestor = node.parentElement
 
-    while (ancestor) {
-      if (ancestor.matches(selector)) {
-        return <T>ancestor
-      }
-
-      ancestor = ancestor.parentElement
+  while ( ancestor ) {
+    if ( ancestor.matches( selector ) ) {
+      return <T>ancestor
     }
 
-    return null
+    ancestor = ancestor.parentElement
+  }
+
+  return null
 }
 
 /**
@@ -74,8 +76,9 @@ const parents = <T extends HTMLElement = HTMLElement>(node: HTMLElement, selecto
  * @example parent<HTMLDivElement>(HTMLElement)
  * @example parent<HTMLSpanElement>(HTMLElement)
  */
-const parent = <T extends HTMLElement = HTMLElement>(node: HTMLElement): T | null => {
-  return <T>node.parentElement
+type ReturnTypeParent<T> = T | null
+const parent = <T extends HTMLElement = HTMLElement>( node: HTMLElement ): ReturnTypeParent<T> => {
+  return <ReturnTypeParent<T>>node.parentElement
 }
 
 /**
@@ -88,18 +91,19 @@ const parent = <T extends HTMLElement = HTMLElement>(node: HTMLElement): T | nul
  * @example prev<HTMLDivElement>(HTMLElement, '.prevDiv')
  * @example prev<HTMLSpanElement>(HTMLElement, '.prevSpan')
  */
-const prev = <T extends HTMLElement = HTMLElement>(element: HTMLElement, selector: string): T | null => {
+type ReturnTypePrev<T> = T | null
+const prev = <T extends HTMLElement = HTMLElement>( element: HTMLElement, selector: CSSSelector ): ReturnTypePrev<T> => {
   let previous = element.previousElementSibling
 
-    while (previous) {
-      if (previous.matches(selector)) {
-        return <T>previous
-      }
-
-      previous = previous.previousElementSibling
+  while ( previous ) {
+    if ( previous.matches( selector ) ) {
+      return <T>previous
     }
 
-    return null
+    previous = previous.previousElementSibling
+  }
+
+  return null
 }
 
 /**
@@ -112,20 +116,20 @@ const prev = <T extends HTMLElement = HTMLElement>(element: HTMLElement, selecto
  * @example next<HTMLDivElement>(HTMLElement, '.nextDiv')
  * @example next<HTMLSpanElement>(HTMLElement, '.nextSpan')
  */
-const next = <T extends HTMLElement = HTMLElement>(element: HTMLElement, selector: string): T | null => {
+type ReturnTypeNext<T> = T | null
+const next = <T extends HTMLElement = HTMLElement>( element: HTMLElement, selector: CSSSelector ): ReturnTypeNext<T> => {
   let next = element.nextElementSibling
 
-    while (next) {
-      if (next.matches(selector)) {
-        return <T>next
-      }
-
-      next = next.nextElementSibling
+  while ( next ) {
+    if ( next.matches( selector ) ) {
+      return <T>next
     }
 
-    return null
-}
+    next = next.nextElementSibling
+  }
 
+  return null
+}
 
 export const selectorEngine = {
   find,

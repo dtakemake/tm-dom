@@ -3,7 +3,7 @@
 type Callback = () => void
 
 type documentReady = {
-  (callback: Callback): void
+  ( callback: Callback ): void
 }
 
 /**
@@ -17,8 +17,8 @@ type documentReady = {
  * @example documentReady(() => {})
  */
 const documentReady: documentReady = callback => {
-  if(document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', callback, { once: true })
+  if( document.readyState === 'loading' ) {
+    document.addEventListener( 'DOMContentLoaded', callback, { once: true } )
   } else {
     // call the passed function immediately
     callback()
@@ -26,7 +26,7 @@ const documentReady: documentReady = callback => {
 }
 
 type documentComplete = {
-  (callback: Callback): void
+  ( callback: Callback ): void
 }
 
 /*
@@ -49,15 +49,17 @@ interface Event {
  * @example documentComplete(() => {})
  */
 const documentComplete: documentComplete = callback => {
-  if(document.readyState !== 'complete') {
+  if( document.readyState !== 'complete' ) {
 
-    // ?
-    document.addEventListener('readystatechange', () => {
-      if(document.readyState === 'complete') {
+    const readyStateChangeHandler = ( event: Event ) => {
+      const target = event.target as Document
+
+      if( target.readyState === 'complete' ) {
         callback()
       }
-    })
+    }
 
+    document.addEventListener( 'readystatechange', readyStateChangeHandler )
   } else {
     // call the passed function immediately
     callback()
