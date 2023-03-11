@@ -12,7 +12,7 @@ $ npm install tm-dom
 
 ```ts
 
-import { selectorEngine } from tm-dom
+import { selectorEngine } from 'tm-dom'
 
 const inputTextElements = selectorEngine.find<HTMLInputElement>( 'input["type="text"]' )
 inputTextElements.forEach( element => {
@@ -30,7 +30,7 @@ inputTextElements.forEach( element => {
 
 ```ts
 
-import { documentReady, documentComplete } from tm-dom
+import { documentReady, documentComplete } from 'tm-dom'
 
 // the function calls the passed function after the document has finished loading 
 // and the document has been parsed, but sub-resources such as scripts, images,
