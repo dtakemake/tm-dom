@@ -29,15 +29,6 @@ type documentComplete = {
   ( callback: Callback ): void
 }
 
-/*
-interface EventTarget {
-  readonly readyState: DocumentReadyState
-}
-
-interface Event {
-  readonly target: EventTarget
-}*/
-
 /**
  * the function calls the passed function after 
  * the document and all sub-resources have finished loading. 
